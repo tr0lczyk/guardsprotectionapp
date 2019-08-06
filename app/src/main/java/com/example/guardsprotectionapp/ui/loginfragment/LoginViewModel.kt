@@ -17,14 +17,19 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     val enableErrorPassword: LiveData<Boolean>
         get() = _enableErrorPassword
 
+//    private val _loginErrorText = MutableLiveData<String>()
+//
+//    val loginErrorText: LiveData<String>
+//        get() = _loginErrorText
+//
+//    private val _passwordErrorText = MutableLiveData<String>()
+//
+//    val passwordErrorText: LiveData<String>
+//        get() = _passwordErrorText
+
     val userInputLogin = MutableLiveData<String>()
 
     val userInputPassword = MutableLiveData<String>()
-
-    init {
-        _enableErrorLogin.value = true
-        _enableErrorPassword.value = false
-    }
 
     fun invalidLogin(isLoginValid: Boolean){
         _enableErrorLogin.value = isLoginValid
@@ -33,4 +38,12 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     fun invalidPassword(isPasswordValid: Boolean){
         _enableErrorPassword.value = isPasswordValid
     }
+
+//    fun setLoginErrorText(text: String){
+//        _loginErrorText.value = text
+//    }
+//
+//    fun setPasswordErrorText(text: String){
+//        _passwordErrorText.value = text
+//    }
 }

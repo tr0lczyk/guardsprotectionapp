@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.example.guardsprotectionapp.R
 import com.example.guardsprotectionapp.databinding.FragmentLoginBinding
 import timber.log.Timber
 
@@ -18,28 +19,31 @@ class LoginFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val application = requireNotNull(activity).application
         val binding = FragmentLoginBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-
         viewModel.userInputLogin.observe(this, Observer {
-            it?.let {
-                if (it.contains("@")) {
+                if (!it.contains("@") && !it.isEmpty()) {
                     viewModel.invalidLogin(true)
+                    binding.textInputLayoutLogin.error = getString(R.string.at_char)
+                } else if(it.contains("@") || it.isEmpty()) {
+                    viewModel.invalidLogin(false)
+                    binding.textInputLayoutLogin.error = null
                 }
-            }
         })
 
         viewModel.userInputPassword.observe(this, Observer {
-            it?.let {
-                if (it.toCharArray().size < 8) {
-                    viewModel.invalidLogin(true)
-                }
+            if (binding.textInputLayoutPassword.hasFocus()){
+                    if (it.toCharArray().size < 8) {
+                        viewModel.invalidPassword(true)
+                        binding.textInputLayoutPassword.error = getString(R.string.pass_char)
+                    } else if (it.toCharArray().size >= 8 || it.isEmpty()){
+                        viewModel.invalidPassword(false)
+                        binding.textInputLayoutPassword.error = null
+                    }
             }
         })
-
         return binding.root
     }
 }

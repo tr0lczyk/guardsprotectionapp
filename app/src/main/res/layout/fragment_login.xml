@@ -15,15 +15,13 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutLogin"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
-            android:layout_marginBottom="8dp"
-            android:hint="mail"
+            android:hint="Mail"
             app:errorEnabled="@{viewModel.enableErrorLogin}"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,17 +30,19 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@={viewModel.userInputLogin}"/>
+                android:text="@={viewModel.userInputLogin}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutPassword"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="password"
+            android:hint="Password"
             app:errorEnabled="@{viewModel.enableErrorPassword}"
+            app:helperTextEnabled="true"
+            app:helperText="*Required"
             app:layout_constraintEnd_toEndOf="@+id/textInputLayoutLogin"
             app:layout_constraintStart_toStartOf="@+id/textInputLayoutLogin"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutLogin">
