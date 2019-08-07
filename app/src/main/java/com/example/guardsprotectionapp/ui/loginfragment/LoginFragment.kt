@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.guardsprotectionapp.R
 import com.example.guardsprotectionapp.databinding.FragmentLoginBinding
+import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil
 
 class LoginFragment : Fragment() {
 
@@ -29,6 +30,7 @@ class LoginFragment : Fragment() {
                 viewModel.invalidLogin(false)
                 binding.textInputLayoutLogin.error = null
             }
+            viewModel.isLoginButtonEnabled()
         })
 
         viewModel.userInputPassword.observe(this, Observer {
@@ -39,7 +41,9 @@ class LoginFragment : Fragment() {
                 viewModel.invalidPassword(false)
                 binding.textInputLayoutPassword.error = null
             }
+            viewModel.isLoginButtonEnabled()
         })
+
         return binding.root
     }
 }

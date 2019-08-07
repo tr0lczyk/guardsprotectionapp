@@ -65,4 +65,7 @@ dependencies {
 
     //Logging interceptor
     implementation 'com.squareup.okhttp3:logging-interceptor:4.0.1'
+
+    //keyBoardVisibility
+    implementation 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:2.3.0'
 }

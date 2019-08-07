@@ -3,4 +3,8 @@
     <string name="pass_char">Password should be at least 8 chatacters</string>
     <string name="at_char">Your login should be an email address</string>
     <string name="invalid_login">Invalid login</string>
+    <string name="login_button_toast">Please fill correctly login and password fields</string>
+    <string name="login">Login</string>
+    <string name="mail">Mail</string>
+    <string name="password">Password</string>
 </resources>

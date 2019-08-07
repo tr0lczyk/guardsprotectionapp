@@ -2,12 +2,16 @@ package com.example.guardsprotectionapp.ui.loginfragment
 
 import android.app.Application
 import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.guardsprotectionapp.R
 import com.example.guardsprotectionapp.models.LoginModel
 import com.example.guardsprotectionapp.network.GuardApi
 import kotlinx.coroutines.*
+import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -27,14 +31,28 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     val enableErrorPassword: LiveData<Boolean>
         get() = _enableErrorPassword
 
-    init {
-        _enableErrorLogin.value = false
-        _enableErrorPassword.value = false
-    }
+    private val loginButtonEnabled = MutableLiveData<Boolean>()
 
     val userInputLogin = MutableLiveData<String>()
 
     val userInputPassword = MutableLiveData<String>()
+
+    val progressVisibility = MutableLiveData<Int>()
+
+    private fun areLoginPasswordValid(): Boolean {
+        return (!enableErrorLogin.value!! && !enableErrorPassword.value!!)
+    }
+
+    private fun areLoginPasswordEmpty(): Boolean {
+        return (userInputLogin.value!!.isEmpty() && userInputPassword.value!!.isEmpty())
+    }
+
+    init {
+        _enableErrorLogin.value = false
+        _enableErrorPassword.value = false
+        loginButtonEnabled.value = false
+        progressVisibility.value = View.GONE
+    }
 
     fun invalidLogin(isLoginValid: Boolean) {
         _enableErrorLogin.value = isLoginValid
@@ -45,8 +63,9 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun userLogin() {
-        coroutineScope.launch {
-            try{
+        if (loginButtonEnabled.value!!) {
+            progressVisibility.value = View.VISIBLE
+            coroutineScope.launch {
                 val response = GuardApi.retrofitService.postLogin(
                     LoginModel(
                         userInputLogin.value!!,
@@ -54,18 +73,27 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                         true
                     )
                 )
-                Log.i("TAG","${userInputLogin.value!!}")
-                Log.i("TAG","${userInputPassword.value!!}")
-                response?.let {
-                    Log.i("TAG", "${response.accountId}")
-                    Log.i("TAG", "${response.name}")
+                response.let {
+                    if (response.isSuccessful) {
+                        Toast.makeText(getApplication(), "success", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(getApplication(), response.message(), Toast.LENGTH_SHORT).show()
+                    }
+                    progressVisibility.value = View.GONE
                 }
-
-
-            } catch (e: HttpException){
-                Log.e("TAG", "Exception " + e.printStackTrace())
             }
+        } else {
+            Toast.makeText(
+                getApplication()
+                , getApplication<Application>().resources.getString(R.string.login_button_toast)
+                , Toast.LENGTH_LONG
+            ).show()
+        }
+    }
 
+    fun isLoginButtonEnabled() {
+        if (areLoginPasswordValid() && !areLoginPasswordEmpty()) {
+            loginButtonEnabled.value = true
         }
     }
 
@@ -73,6 +101,4 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         super.onCleared()
         viewModelJob.cancel()
     }
-
-
 }
