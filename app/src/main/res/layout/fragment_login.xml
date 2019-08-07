@@ -41,13 +41,12 @@
             android:layout_height="wrap_content"
             android:hint="Password"
             app:errorEnabled="@{viewModel.enableErrorPassword}"
-            app:helperTextEnabled="true"
-            app:helperText="*Required"
             app:layout_constraintEnd_toEndOf="@+id/textInputLayoutLogin"
             app:layout_constraintStart_toStartOf="@+id/textInputLayoutLogin"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutLogin">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:inputType="textPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@={viewModel.userInputPassword}" />
@@ -61,6 +60,7 @@
             android:background="@drawable/button_background"
             android:fontFamily="@font/roboto"
             android:foreground="?attr/selectableItemBackground"
+            android:onClick="@{() -> viewModel.userLogin()}"
             android:paddingStart="32dp"
             android:paddingTop="8dp"
             android:paddingEnd="32dp"

@@ -7,6 +7,6 @@ import com.google.android.material.textfield.TextInputLayout
 @BindingAdapter("errorText")
 fun TextInputLayout.setErrorText(text: String?){
     text?.let {
-        error = text
+        setErrorText(text)
     }
 }
