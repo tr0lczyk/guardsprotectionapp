@@ -1,7 +1,6 @@
 package com.example.guardsprotectionapp.ui.loginfragment
 
 import android.app.Application
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
@@ -10,10 +9,10 @@ import androidx.lifecycle.MutableLiveData
 import com.example.guardsprotectionapp.R
 import com.example.guardsprotectionapp.models.LoginModel
 import com.example.guardsprotectionapp.network.GuardApi
-import kotlinx.coroutines.*
-import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil
-import retrofit2.HttpException
-import java.io.IOException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -38,6 +37,8 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     val userInputPassword = MutableLiveData<String>()
 
     val progressVisibility = MutableLiveData<Int>()
+
+    val startNavigation = MutableLiveData<Boolean>()
 
     private fun areLoginPasswordValid(): Boolean {
         return (!enableErrorLogin.value!! && !enableErrorPassword.value!!)
@@ -76,6 +77,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                 response.let {
                     if (response.isSuccessful) {
                         Toast.makeText(getApplication(), "success", Toast.LENGTH_SHORT).show()
+                        startNavigation.value = true
                     } else {
                         Toast.makeText(getApplication(), response.message(), Toast.LENGTH_SHORT).show()
                     }

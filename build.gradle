@@ -11,6 +11,7 @@ buildscript {
         version_navigation = "2.0.0"
         version_retrofit = "2.6.1"
         version_recyclerview = "1.0.0"
+        material_version = "1.1.0-alpha09"
     }
     repositories {
         google()
@@ -31,7 +32,7 @@ allprojects {
     repositories {
         google()
         jcenter()
-        
+        maven { url "https://jitpack.io" }
     }
 }
 

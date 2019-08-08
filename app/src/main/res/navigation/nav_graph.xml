@@ -8,5 +8,15 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.guardsprotectionapp.ui.loginfragment.LoginFragment"
-        android:label="LoginFragment" />
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_panelFragment"
+            app:destination="@id/panelFragment" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_panel"
+        android:id="@+id/panelFragment"
+        android:name="com.example.guardsprotectionapp.ui.panelfragment.PanelFragment"
+        android:label="PanelFragment" />
 </navigation>

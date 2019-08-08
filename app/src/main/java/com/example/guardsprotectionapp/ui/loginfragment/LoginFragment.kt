@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.example.guardsprotectionapp.R
 import com.example.guardsprotectionapp.databinding.FragmentLoginBinding
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil
@@ -23,7 +24,7 @@ class LoginFragment : Fragment() {
         binding.viewModel = viewModel
 
         viewModel.userInputLogin.observe(this, Observer {
-            if (!it.contains("@") && !it.isEmpty()) {
+            if (!it.contains("@") && it.isNotEmpty()) {
                 viewModel.invalidLogin(true)
                 binding.textInputLayoutLogin.error = getString(R.string.at_char)
             } else if (it.contains("@") || it.isEmpty()) {
@@ -34,7 +35,7 @@ class LoginFragment : Fragment() {
         })
 
         viewModel.userInputPassword.observe(this, Observer {
-            if (it.toCharArray().size < 8 && !it.isEmpty()) {
+            if (it.toCharArray().size < 8 && it.isNotEmpty()) {
                 viewModel.invalidPassword(true)
                 binding.textInputLayoutPassword.error = getString(R.string.pass_char)
             } else if (it.toCharArray().size >= 8 || it.isEmpty()) {
@@ -42,6 +43,14 @@ class LoginFragment : Fragment() {
                 binding.textInputLayoutPassword.error = null
             }
             viewModel.isLoginButtonEnabled()
+        })
+
+        viewModel.startNavigation.observe(this, Observer {
+            if(it){
+                this.findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToPanelFragment())
+                UIUtil.hideKeyboard(activity)
+                viewModel.startNavigation.value = false
+            }
         })
 
         return binding.root

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/rejectedOffers"
+        android:title="@string/rejected" />
+    <item
+        android:id="@+id/currentOffers"
+        android:title="@string/current" />
+    <item
+        android:id="@+id/acceptedOffers"
+        android:title="@string/accepted" />
+</menu>
