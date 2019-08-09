@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.guardsprotectionapp.R
 import com.example.guardsprotectionapp.models.LoginModel
 import com.example.guardsprotectionapp.network.GuardApi
+import com.example.guardsprotectionapp.utils.SharedPreferences
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -16,9 +17,14 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
+    val USER_LOGIN = "userLogin"
+    val USER_PASSWORD = "userPassword"
+
     private var viewModelJob = Job()
 
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+
+    val sharedPreferences = SharedPreferences(getApplication())
 
     private val _enableErrorLogin = MutableLiveData<Boolean>()
 
@@ -76,6 +82,10 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                 )
                 response.let {
                     if (response.isSuccessful) {
+                        response.body()?.let {
+                            sharedPreferences.save(USER_LOGIN, userInputLogin.value!!)
+                            sharedPreferences.save(USER_LOGIN, userInputLogin.value!!)
+                        }
                         Toast.makeText(getApplication(), "success", Toast.LENGTH_SHORT).show()
                         startNavigation.value = true
                     } else {

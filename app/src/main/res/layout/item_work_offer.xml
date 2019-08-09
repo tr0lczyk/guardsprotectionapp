@@ -6,12 +6,18 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.example.guardsprotectionapp.models.OfferModel" />
+        
+        <variable
+            name="clickListener"
+            type="com.example.guardsprotectionapp.ui.panelfragment.OfferAdapter.OfferListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <com.google.android.material.card.MaterialCardView
@@ -20,6 +26,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            app:cardCornerRadius="10dp"
             android:minHeight="200dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -29,35 +36,50 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ImageView
-                    android:id="@+id/offerImage"
-                    android:background="@drawable/round_image_background"
-                    tools:src="@color/buttonColor"
-                    android:outlineProvider="background"
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/offerImageContainer"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
+                    app:cardCornerRadius="10dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent" >
+
+                    <ImageView
+                        android:id="@+id/offerImage"
+                        android:background="@drawable/round_image_background"
+                        tools:src="@color/buttonColor"
+                        android:outlineProvider="background"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@color/colorAccent"/>
+
+                </com.google.android.material.card.MaterialCardView>
+
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/offerCustomerName"
+                    android:fontFamily="@font/roboto"
+                    android:text="@{viewModel.customerName}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    app:layout_constraintStart_toEndOf="@+id/offerImage"
-                    app:layout_constraintTop_toTopOf="@+id/offerImage"
+                    app:layout_constraintStart_toEndOf="@+id/offerImageContainer"
+                    app:layout_constraintTop_toTopOf="@+id/offerImageContainer"
                     tools:text="Customer name" />
 
                 <TextView
+                    android:id="@+id/offerLocation"
+                    android:fontFamily="@font/roboto"
+                    android:text="@{viewModel.fullAddress}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    app:layout_constraintStart_toStartOf="@+id/textView2"
-                    app:layout_constraintTop_toBottomOf="@+id/textView2"
+                    app:layout_constraintStart_toStartOf="@+id/offerCustomerName"
+                    app:layout_constraintTop_toBottomOf="@+id/offerCustomerName"
                     tools:text="event location" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
