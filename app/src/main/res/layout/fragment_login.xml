@@ -1,97 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.example.guardsprotectionapp.ui.loginfragment.LoginViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayoutLogin"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            android:hint="@string/mail"
-            app:errorEnabled="@{viewModel.enableErrorLogin}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_person_black_24dp"
-                android:text="@={viewModel.userInputLogin}"
-                android:inputType="textEmailAddress"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayoutPassword"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/password"
-            app:errorEnabled="@{viewModel.enableErrorPassword}"
-            app:layout_constraintEnd_toEndOf="@+id/textInputLayoutLogin"
-            app:layout_constraintStart_toStartOf="@+id/textInputLayoutLogin"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutLogin">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:inputType="textPassword"
-                android:drawableStart="@drawable/ic_lock_black_24dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@={viewModel.userInputPassword}" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:background="@drawable/button_background"
-            android:fontFamily="@font/roboto"
-            android:foreground="?attr/selectableItemBackground"
-            android:onClick="@{() -> viewModel.userLogin()}"
-            android:paddingStart="32dp"
-            android:paddingTop="8dp"
-            android:paddingEnd="32dp"
-            android:paddingBottom="8dp"
-            android:text="@string/login"
-            android:textColor="@android:color/white"
-            app:layout_constraintEnd_toEndOf="@+id/textInputLayoutPassword"
-            app:layout_constraintStart_toStartOf="@+id/textInputLayoutPassword"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="3">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="@{viewModel.progressVisibility}"
-            android:background="#26000000"/>
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary">
 
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="@{viewModel.progressVisibility}"
-            android:indeterminate="true"
-            android:indeterminateTint="@android:color/white"
-            android:indeterminateTintMode="src_atop"
-            app:layout_constraintBottom_toBottomOf="@+id/textInputLayoutPassword"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textInputLayoutLogin" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#26000000"
+                android:visibility="@{viewModel.progressVisibility}"
+                tools:visibility="gone" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/loginButton" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayoutLogin"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="32dp"
+                    android:hint="@string/mail"
+                    app:errorEnabled="@{viewModel.enableErrorLogin}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_person_black_24dp"
+                        android:inputType="textEmailAddress"
+                        android:text="@={viewModel.userInputLogin}" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayoutPassword"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/password"
+                    app:errorEnabled="@{viewModel.enableErrorPassword}"
+                    app:layout_constraintEnd_toEndOf="@+id/textInputLayoutLogin"
+                    app:layout_constraintStart_toStartOf="@+id/textInputLayoutLogin"
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayoutLogin">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_lock_black_24dp"
+                        android:inputType="textPassword"
+                        android:text="@={viewModel.userInputPassword}" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/loginButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:background="@drawable/button_background"
+                    android:fontFamily="@font/roboto_bold"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:onClick="@{() -> viewModel.userLogin()}"
+                    android:paddingStart="32dp"
+                    android:paddingTop="12dp"
+                    android:paddingEnd="32dp"
+                    android:paddingBottom="12dp"
+                    android:text="@string/login"
+                    android:textColor="@color/buttonColor"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="@+id/textInputLayoutPassword"
+                    app:layout_constraintStart_toStartOf="@+id/textInputLayoutPassword"
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#26000000"
+                android:visibility="@{viewModel.progressVisibility}"
+                tools:visibility="gone" />
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:indeterminateTint="@android:color/white"
+                android:indeterminateTintMode="src_atop"
+                android:visibility="@{viewModel.progressVisibility}"
+                app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
 </layout>

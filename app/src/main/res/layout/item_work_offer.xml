@@ -26,8 +26,11 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            app:cardCornerRadius="10dp"
+            android:layout_marginBottom="8dp"
             android:minHeight="200dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -46,38 +49,38 @@
                     app:cardCornerRadius="10dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" >
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
                         android:id="@+id/offerImage"
-                        android:background="@drawable/round_image_background"
-                        tools:src="@color/buttonColor"
-                        android:outlineProvider="background"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@color/colorAccent"/>
+                        android:background="@drawable/round_image_background"
+                        android:outlineProvider="background"
+                        android:src="@color/colorAccent"
+                        tools:src="@color/buttonColor" />
 
                 </com.google.android.material.card.MaterialCardView>
 
 
                 <TextView
                     android:id="@+id/offerCustomerName"
-                    android:fontFamily="@font/roboto"
-                    android:text="@{viewModel.customerName}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:fontFamily="@font/roboto"
+                    android:text="@{viewModel.customerName}"
                     app:layout_constraintStart_toEndOf="@+id/offerImageContainer"
                     app:layout_constraintTop_toTopOf="@+id/offerImageContainer"
                     tools:text="Customer name" />
 
                 <TextView
                     android:id="@+id/offerLocation"
-                    android:fontFamily="@font/roboto"
-                    android:text="@{viewModel.fullAddress}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:fontFamily="@font/roboto"
+                    android:text="@{viewModel.fullAddress}"
                     app:layout_constraintStart_toStartOf="@+id/offerCustomerName"
                     app:layout_constraintTop_toBottomOf="@+id/offerCustomerName"
                     tools:text="event location" />

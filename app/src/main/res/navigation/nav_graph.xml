@@ -18,5 +18,6 @@
         tools:layout="@layout/fragment_panel"
         android:id="@+id/panelFragment"
         android:name="com.example.guardsprotectionapp.ui.panelfragment.PanelFragment"
-        android:label="PanelFragment" />
+        android:label="PanelFragment">
+    </fragment>
 </navigation>

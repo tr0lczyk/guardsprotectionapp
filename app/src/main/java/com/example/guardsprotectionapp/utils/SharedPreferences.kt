@@ -3,6 +3,8 @@ package com.example.guardsprotectionapp.utils
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Parcelable
+import android.util.Log
+import com.example.guardsprotectionapp.models.LoginResponse
 import com.squareup.moshi.Moshi
 
 
@@ -45,18 +47,32 @@ class SharedPreferences(val context: Context){
         editor.apply()
     }
 
-    fun save(KEY_NAME: String, loginResponse: Parcelable) {
+    fun save(KEY_NAME: String, loginResponse: LoginResponse) {
 
         val editor: SharedPreferences.Editor = sharedPref.edit()
 
         val moshi = Moshi.Builder()
             .add(com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory())
             .build()
-        val adapter = moshi.adapter(Parcelable::class.java)
+        val adapter = moshi.adapter(LoginResponse::class.java)
 
         editor.putString(KEY_NAME,adapter.toJson(loginResponse))
 
+        Log.i("TAG","success")
         editor.apply()
+    }
+
+    fun getValueLogin(KEY_NAME: String): LoginResponse?{
+        val moshi = Moshi.Builder()
+            .add(com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory())
+            .build()
+        val adapter = moshi.adapter(LoginResponse::class.java)
+        val jsonString = sharedPref.getString(KEY_NAME,null)
+        return adapter.fromJson(jsonString)
+    }
+
+    fun getValueString(KEY_NAME: String): String?{
+        return sharedPref.getString(KEY_NAME,null)
     }
 
     fun clearSharedPreference() {

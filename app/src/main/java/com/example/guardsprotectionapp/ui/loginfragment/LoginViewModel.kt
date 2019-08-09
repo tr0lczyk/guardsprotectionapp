@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.guardsprotectionapp.R
 import com.example.guardsprotectionapp.models.LoginModel
+import com.example.guardsprotectionapp.models.LoginResponse
 import com.example.guardsprotectionapp.network.GuardApi
 import com.example.guardsprotectionapp.utils.SharedPreferences
 import kotlinx.coroutines.CoroutineScope
@@ -19,31 +20,21 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
     val USER_LOGIN = "userLogin"
     val USER_PASSWORD = "userPassword"
+    val USER = "user"
 
     private var viewModelJob = Job()
-
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-
     val sharedPreferences = SharedPreferences(getApplication())
-
     private val _enableErrorLogin = MutableLiveData<Boolean>()
-
     val enableErrorLogin: LiveData<Boolean>
         get() = _enableErrorLogin
-
     private val _enableErrorPassword = MutableLiveData<Boolean>()
-
     val enableErrorPassword: LiveData<Boolean>
         get() = _enableErrorPassword
-
     private val loginButtonEnabled = MutableLiveData<Boolean>()
-
     val userInputLogin = MutableLiveData<String>()
-
     val userInputPassword = MutableLiveData<String>()
-
     val progressVisibility = MutableLiveData<Int>()
-
     val startNavigation = MutableLiveData<Boolean>()
 
     private fun areLoginPasswordValid(): Boolean {
@@ -83,8 +74,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                 response.let {
                     if (response.isSuccessful) {
                         response.body()?.let {
-                            sharedPreferences.save(USER_LOGIN, userInputLogin.value!!)
-                            sharedPreferences.save(USER_LOGIN, userInputLogin.value!!)
+                            sharedPreferences.save(USER, response.body()!!)
                         }
                         Toast.makeText(getApplication(), "success", Toast.LENGTH_SHORT).show()
                         startNavigation.value = true

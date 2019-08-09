@@ -26,5 +26,4 @@ class PanelFragment: Fragment(){
         })
         return binding.root
     }
-
 }

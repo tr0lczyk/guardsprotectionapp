@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.example.guardsprotectionapp.ui.panelfragment.PanelViewModel" />
@@ -12,39 +14,71 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/panelActionBar"
+            android:background="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/separatorView"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/loginButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/panelActionBar"/>
+
         <com.google.android.material.button.MaterialButtonToggleGroup
             android:id="@+id/toggle_button_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/separatorView"
             app:singleSelection="true">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/rejectedButton"
+                android:id="@+id/declinedButton"
                 style="@style/ToogleButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_email_black_24dp"
                 android:inputType="text"
-                android:text="Rejected" />
+                android:onClick="@{() -> viewModel.getDeclinedJobOffers()}"
+                android:text="@string/declined"
+                android:textColor="@{viewModel.declinedStrokeColor}"
+                app:strokeColor="@{viewModel.declinedStrokeColor}" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/currentButton"
                 style="@style/ToogleButton"
+                android:onClick="@{() -> viewModel.getJobOffers()}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_email_black_24dp"
                 android:inputType="text"
-                android:text="Current" />
+                android:text="@string/inbox"
+                android:textColor="@{viewModel.inboxStrokeColor}"
+                app:strokeColor="@{viewModel.inboxStrokeColor}" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/acceptedButton"
                 style="@style/ToogleButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_email_black_24dp"
                 android:inputType="text"
-                android:text="Accpeted" />
+                android:onClick="@{() -> viewModel.getAcceptedJobOffers()}"
+                android:text="@string/accpeted"
+                android:textColor="@{viewModel.acceptedStrokeColor}"
+                app:strokeColor="@{viewModel.acceptedStrokeColor}" />
 
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
@@ -62,6 +96,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toggle_button_group"
             app:listData="@{viewModel.offerList}" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#26000000"
+            android:visibility="@{viewModel.panelProgressVisibility}"
+            tools:visibility="gone" />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:indeterminateTint="@android:color/white"
+            android:indeterminateTintMode="src_atop"
+            android:visibility="@{viewModel.panelProgressVisibility}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
