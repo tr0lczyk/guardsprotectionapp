@@ -18,9 +18,11 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
-    val USER_LOGIN = "userLogin"
-    val USER_PASSWORD = "userPassword"
-    val USER = "user"
+    companion object {
+        const val USER_LOGIN = "userLogin"
+        const val USER_PASSWORD = "userPassword"
+        const val USER = "user"
+    }
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)

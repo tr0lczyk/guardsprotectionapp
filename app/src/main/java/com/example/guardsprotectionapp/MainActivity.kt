@@ -1,13 +1,10 @@
 package com.example.guardsprotectionapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.Telephony.Carriers.USER
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavOptions
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
+import com.example.guardsprotectionapp.ui.loginfragment.LoginViewModel.Companion.USER
 import com.example.guardsprotectionapp.utils.SharedPreferences
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -20,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         val navOptions = NavOptions.Builder()
             .setPopUpTo(R.id.loginFragment, true)
             .build()
-        sharedPreferences.getValueLogin(USER).let {
+        sharedPreferences.getValueString(USER)?.let {
             NavHostFragment.findNavController(mainHostFragment)
                 .navigate(R.id.action_loginFragment_to_panelFragment, null, navOptions)
         }

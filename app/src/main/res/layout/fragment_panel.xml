@@ -82,20 +82,27 @@
 
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/offerRecycler"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeButton"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toggle_button_group"
-            app:listData="@{viewModel.offerList}" />
+            app:layout_constraintTop_toBottomOf="@+id/toggle_button_group">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/offerRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:listData="@{viewModel.offerList}" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

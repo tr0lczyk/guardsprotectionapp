@@ -8,10 +8,10 @@ import com.example.guardsprotectionapp.models.LoginResponse
 import com.squareup.moshi.Moshi
 
 
-class SharedPreferences(val context: Context){
+class SharedPreferences(val context: Context) {
 
     private val SHARED_PREFS = "prefs"
-    val sharedPref: SharedPreferences = context.getSharedPreferences(SHARED_PREFS,Context.MODE_PRIVATE)
+    val sharedPref: SharedPreferences = context.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE)
 
     fun save(KEY_NAME: String, text: String) {
 
@@ -56,23 +56,23 @@ class SharedPreferences(val context: Context){
             .build()
         val adapter = moshi.adapter(LoginResponse::class.java)
 
-        editor.putString(KEY_NAME,adapter.toJson(loginResponse))
+        editor.putString(KEY_NAME, adapter.toJson(loginResponse))
 
-        Log.i("TAG","success")
+        Log.i("TAG", "success")
         editor.apply()
     }
 
-    fun getValueLogin(KEY_NAME: String): LoginResponse?{
+    fun getValueLogin(KEY_NAME: String): LoginResponse? {
         val moshi = Moshi.Builder()
             .add(com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory())
             .build()
         val adapter = moshi.adapter(LoginResponse::class.java)
-        val jsonString = sharedPref.getString(KEY_NAME,null)
+        val jsonString = sharedPref.getString(KEY_NAME, null)
         return adapter.fromJson(jsonString)
     }
 
-    fun getValueString(KEY_NAME: String): String?{
-        return sharedPref.getString(KEY_NAME,null)
+    fun getValueString(KEY_NAME: String): String? {
+        return sharedPref.getString(KEY_NAME, null)
     }
 
     fun clearSharedPreference() {

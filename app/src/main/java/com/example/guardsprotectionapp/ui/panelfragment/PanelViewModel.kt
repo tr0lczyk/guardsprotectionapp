@@ -24,40 +24,57 @@ class PanelViewModel(application: Application) : AndroidViewModel(application) {
     val inboxStrokeColor = MutableLiveData<Int>()
     val acceptedStrokeColor = MutableLiveData<Int>()
     val panelProgressVisibility = MutableLiveData<Int>()
+    var firstTime = true
+    val swipeRefreshing = MutableLiveData<Boolean>()
 
     init{
+        swipeRefreshing.value = false
         panelProgressVisibility.value = View.GONE
         getJobOffers()
     }
 
     fun getJobOffers(){
-        panelProgressVisibility.value = View.VISIBLE
-        declinedStrokeColor.value = ContextCompat.getColor(getApplication(), R.color.colorPrimary)
-        inboxStrokeColor.value = ContextCompat.getColor(getApplication(), R.color.loginButtonDarker)
-        acceptedStrokeColor.value = ContextCompat.getColor(getApplication(), R.color.colorPrimary)
+        if(firstTime){
+            panelProgressVisibility.value = View.VISIBLE
+            firstTime = false
+        } else {
+            swipeRefreshing
+        }
+
+        getInboxJobOffers()
         panelViewModelScope.launch {
             try{
                 val response = GuardApi.retrofitService.getJobOffers()
                 response.let {
                     if(response.isSuccessful){
-                        Log.i(TAG,"success")
                         response.body()?.let {
+                            swipeRefreshing.value = true
                             offerList.value = response.body()
+                            panelProgressVisibility.value = View.GONE
                         }
                     } else {
                         Log.i(TAG,response.message())
+                        swipeRefreshing.value = true
                         offerList.value = ArrayList()
+                        panelProgressVisibility.value = View.GONE
                     }
-                    panelProgressVisibility.value = View.GONE
                 }
             } catch (e: SocketTimeoutException){
+                swipeRefreshing.value = true
                 Toast.makeText(
                     getApplication(),
                     "Cannot reach the server, please try again",
                     Toast.LENGTH_SHORT).show()
+                panelProgressVisibility.value = View.GONE
             }
 
         }
+    }
+
+    fun getInboxJobOffers(){
+        declinedStrokeColor.value = ContextCompat.getColor(getApplication(), R.color.colorPrimary)
+        inboxStrokeColor.value = ContextCompat.getColor(getApplication(), R.color.loginButtonDarker)
+        acceptedStrokeColor.value = ContextCompat.getColor(getApplication(), R.color.colorPrimary)
     }
 
     fun getDeclinedJobOffers(){
@@ -71,7 +88,6 @@ class PanelViewModel(application: Application) : AndroidViewModel(application) {
         inboxStrokeColor.value = ContextCompat.getColor(getApplication(), R.color.colorPrimary)
         acceptedStrokeColor.value = ContextCompat.getColor(getApplication(), R.color.green)
     }
-
 
     override fun onCleared() {
         super.onCleared()

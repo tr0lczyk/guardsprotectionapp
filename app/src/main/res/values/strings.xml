@@ -13,4 +13,6 @@
     <string name="inbox">Inbox</string>
     <string name="declined">Declined</string>
     <string name="accpeted">Accpeted</string>
+    <string name="decline">Decline</string>
+    <string name="accept">Accept</string>
 </resources>

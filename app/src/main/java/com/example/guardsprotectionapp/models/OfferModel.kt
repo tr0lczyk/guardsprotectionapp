@@ -6,7 +6,7 @@ data class OfferModel (
     val customer: String?,
     val customerId: Int?,
     val customerName: String?,
-    val startDate: String,
+    val startDate: String?,
     val endDate: String?,
     val location: String?,
     val addressPostalCode: Int?,
