@@ -9,10 +9,10 @@
     <string name="password">Password</string>
     <string name="rejected">Rejected</string>
     <string name="current">Current</string>
-    <string name="accepted">Accepted</string>
     <string name="inbox">Inbox</string>
-    <string name="declined">Declined</string>
     <string name="accpeted">Accpeted</string>
     <string name="decline">Decline</string>
     <string name="accept">Accept</string>
+    <string name="declined">Declined</string>
+    <string name="accepted">Accepted</string>
 </resources>

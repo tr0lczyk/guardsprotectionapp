@@ -105,6 +105,35 @@
                     app:layout_constraintTop_toBottomOf="@+id/offerCustomerName"
                     tools:text="event location" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="@string/declined"
+                    android:textColor="@color/red"
+                    android:textSize="32sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:declinedVisibility="@{viewModel.assignedEmployees}" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="@string/accepted"
+                    android:textColor="@color/green"
+                    android:textSize="32sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:acceptedVisibility="@{viewModel.assignedEmployees}"/>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/declinedButton"
@@ -122,8 +151,8 @@
                     app:backgroundTint="@color/red"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/acceptedButton"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:buttonsVisibility="@{viewModel.assignedEmployees}"/>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/acceptedButton"
@@ -140,8 +169,8 @@
                     app:backgroundTint="@color/green"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/declinedButton" />
+                    app:layout_constraintStart_toEndOf="@+id/declinedButton"
+                    app:buttonsVisibility="@{viewModel.assignedEmployees}" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
