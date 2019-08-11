@@ -38,7 +38,7 @@ class PanelViewModel(application: Application) : AndroidViewModel(application) {
     var firstTime = true
     val swipeRefreshing = MutableLiveData<Boolean>()
     var mainOfferList: List<OfferModel>
-    val currentList: MutableList<OfferModel>
+    var currentList: MutableList<OfferModel>
     val sharedPrefs = SharedPreferences(application)
     val user: LoginResponse?
     var whichList: Int
@@ -99,7 +99,7 @@ class PanelViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun getInboxJobOffers() {
-        currentList.clear()
+        currentList = ArrayList()
         whichList = 1
         highlightSingleButton(R.color.colorPrimary, R.color.loginButtonDarker, R.color.colorPrimary)
         for (i in mainOfferList) {
@@ -119,7 +119,7 @@ class PanelViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun getDeclinedJobOffers() {
-        currentList.clear()
+        currentList = ArrayList()
         whichList = 2
         highlightSingleButton(R.color.red, R.color.colorPrimary, R.color.colorPrimary)
         declinedStrokeColor.value = ContextCompat.getColor(getApplication(), R.color.red)
@@ -142,7 +142,7 @@ class PanelViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun getAcceptedJobOffers() {
-        currentList.clear()
+        currentList = ArrayList()
         whichList = 0
         highlightSingleButton(R.color.colorPrimary, R.color.colorPrimary, R.color.green)
         for (i in mainOfferList) {
