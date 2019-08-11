@@ -1,6 +1,5 @@
 package com.example.guardsprotectionapp.models
 
-import androidx.lifecycle.LiveData
 import com.squareup.moshi.Json
 
 data class OfferModel (

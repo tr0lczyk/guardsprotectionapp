@@ -15,4 +15,5 @@
     <string name="accept">Accept</string>
     <string name="declined">Declined</string>
     <string name="accepted">Accepted</string>
+    <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
 </resources>

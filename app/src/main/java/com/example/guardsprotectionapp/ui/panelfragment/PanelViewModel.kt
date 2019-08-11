@@ -14,6 +14,7 @@ import com.example.guardsprotectionapp.network.GuardApi
 import com.example.guardsprotectionapp.ui.loginfragment.LoginViewModel.Companion.USER
 import com.example.guardsprotectionapp.utils.SharedPreferences
 import kotlinx.coroutines.*
+import timber.log.Timber
 import java.net.SocketTimeoutException
 
 class PanelViewModel(application: Application) : AndroidViewModel(application) {
@@ -84,7 +85,7 @@ class PanelViewModel(application: Application) : AndroidViewModel(application) {
                             panelProgressVisibility.value = View.GONE
                         }
                     } else {
-                        Log.i(TAG, response.message())
+                        Timber.i(response.message())
                         swipeRefreshing.value = true
                         _offerList.value = ArrayList()
                         panelProgressVisibility.value = View.GONE

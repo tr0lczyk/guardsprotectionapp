@@ -1,6 +1,7 @@
 package com.example.guardsprotectionapp.ui.loginfragment
 
 import android.app.Application
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
@@ -15,6 +16,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import timber.log.Timber
+import java.net.SocketTimeoutException
 
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -66,24 +69,31 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         if (loginButtonEnabled.value!!) {
             progressVisibility.value = View.VISIBLE
             coroutineScope.launch {
-                val response = GuardApi.retrofitService.postLogin(
-                    LoginModel(
-                        userInputLogin.value!!,
-                        userInputPassword.value!!,
-                        true
+                try{
+                    val response = GuardApi.retrofitService.postLogin(
+                        LoginModel(
+                            userInputLogin.value!!,
+                            userInputPassword.value!!,
+                            true
+                        )
                     )
-                )
-                response.let {
-                    if (response.isSuccessful) {
-                        response.body()?.let {
-                            sharedPreferences.save(USER, response.body()!!)
+                    response.let {
+                        if (response.isSuccessful) {
+                            response.body()?.let {
+                                sharedPreferences.save(USER, response.body()!!)
+                            }
+                            startNavigation.value = true
+                        } else {
+                            Timber.i(response.message())
                         }
-                        Toast.makeText(getApplication(), "success", Toast.LENGTH_SHORT).show()
-                        startNavigation.value = true
-                    } else {
-                        Toast.makeText(getApplication(), response.message(), Toast.LENGTH_SHORT).show()
+                        progressVisibility.value = View.GONE
                     }
-                    progressVisibility.value = View.GONE
+                } catch (e: SocketTimeoutException) {
+                    Toast.makeText(
+                        getApplication(),
+                        "Cannot reach the server, please try again",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         } else {

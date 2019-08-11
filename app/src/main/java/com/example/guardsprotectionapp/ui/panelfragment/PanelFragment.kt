@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.guardsprotectionapp.databinding.FragmentPanelBinding
+import timber.log.Timber
 
 class PanelFragment : Fragment() {
 
@@ -25,16 +26,15 @@ class PanelFragment : Fragment() {
 
         val adapter = OfferAdapter(
             OfferAdapter.OfferListener {
-                Toast.makeText(activity, "item id is ${it.id}", Toast.LENGTH_SHORT).show()
+                Timber.d(it.id.toString())
                 viewModel.declineOffer(it)
             },
             OfferAdapter.OfferListenerAccept {
-                Toast.makeText(activity, "item id is ${it.id}", Toast.LENGTH_SHORT).show()
+                Timber.d(it.id.toString())
                 viewModel.acceptOffer(it)
             })
 
         binding.offerRecycler.adapter = adapter
-
         binding.swipeButton.setOnRefreshListener {
             viewModel.getJobOffers()
         }
