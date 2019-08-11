@@ -1,3 +1,3 @@
 package com.example.guardsprotectionapp.models
 
-data class StatusModel (val id: Long, val name: String)
+data class StatusModel (val id: Int, val name: String)
