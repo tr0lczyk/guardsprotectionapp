@@ -1,5 +1,6 @@
 package com.example.guardsprotectionapp.models
 
+import androidx.lifecycle.LiveData
 import com.squareup.moshi.Json
 
 data class OfferModel (
@@ -21,7 +22,7 @@ data class OfferModel (
     val offerBannerFile: OfferBannerFileModel?,
     val groups: String?,
     val assignedEmployees: List<EmployeeModel>?,
-    val id: Long?,
+    val id: Long,
     val createdBy: Long?,
     val modifiedBy: Long?,
     val createdDate: String?,

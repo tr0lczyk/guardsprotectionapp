@@ -13,6 +13,10 @@
         <variable
             name="clickListener"
             type="com.example.guardsprotectionapp.ui.panelfragment.OfferAdapter.OfferListener" />
+
+        <variable
+            name="clickListenerAccept"
+            type="com.example.guardsprotectionapp.ui.panelfragment.OfferAdapter.OfferListenerAccept" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,7 +38,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:strokeColor="@color/red"
+            app:changeStrokeColor="@{viewModel.assignedEmployees}"
             app:strokeWidth="2dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -69,10 +73,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:fontFamily="@font/roboto_bold"
                     android:text="@{viewModel.customerName}"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="@+id/offerImage"
                     app:layout_constraintTop_toBottomOf="@+id/offerImage"
                     tools:text="Customer name" />
@@ -94,42 +98,50 @@
                     android:id="@+id/offerLocation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:fontFamily="@font/roboto"
                     android:text="@{viewModel.fullAddress}"
                     app:layout_constraintStart_toStartOf="@+id/offerCustomerName"
                     app:layout_constraintTop_toBottomOf="@+id/offerCustomerName"
                     tools:text="event location" />
 
-                <com.google.android.material.button.MaterialButtonToggleGroup
-                    android:id="@+id/declineAcceptGroup"
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/declinedButton"
+                    style="@style/ToogleButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_marginBottom="8dp"
+                    android:drawableTop="@drawable/ic_email_black_24dp"
+                    android:inputType="text"
+                    android:onClick="@{() -> clickListener.onClick(viewModel)}"
+                    android:text="@string/decline"
+                    android:textColor="@android:color/white"
+                    app:backgroundTint="@color/red"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/acceptedButton"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/acceptedButton"
+                    style="@style/ToogleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:layout_marginBottom="8dp"
+                    android:drawableTop="@drawable/ic_email_black_24dp"
+                    android:inputType="text"
+                    android:onClick="@{() -> clickListenerAccept.onClickAccept(viewModel)}"
+                    android:text="@string/accept"
+                    android:textColor="@android:color/white"
+                    app:backgroundTint="@color/green"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:singleSelection="true">
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/declinedButton"
-                        style="@style/ToogleButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawableTop="@drawable/ic_email_black_24dp"
-                        android:inputType="text"
-                        android:text="@string/decline"
-                        android:onClick="@{() -> clickListener.onClick(viewModel)}"/>
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/acceptedButton"
-                        style="@style/ToogleButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawableTop="@drawable/ic_email_black_24dp"
-                        android:inputType="text"
-                        android:text="@string/accept" />
-
-                </com.google.android.material.button.MaterialButtonToggleGroup>
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/declinedButton" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

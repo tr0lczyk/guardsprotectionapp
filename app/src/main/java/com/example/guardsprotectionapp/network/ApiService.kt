@@ -20,7 +20,7 @@ import retrofit2.http.Path
 private const val BASE_URL = "https://gssmanagementapi.softwarespace.eu/api/"
 private const val POST_LOGIN_URL = "jwt/token"
 private const val GET_JOB_OFFERS = "JobOffers"
-private const val POST_UPDATE_ACCEPTANCE = "JobOffers/UpdateAcceptance/{jobOfferId}"
+private const val POST_UPDATE_ACCEPTANCE = "JobOffers/SetEmployeeAcceptance"
 
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
@@ -35,9 +35,8 @@ interface GuardAPiService {
     suspend fun getJobOffers(): Response<List<OfferModel>>
 
     @POST(POST_UPDATE_ACCEPTANCE)
-    suspend fun postUpdateAcceptance(
-        @Body employee: EmployeeStatusModel,
-        @Path("jobOfferId") offerId: Long
+    suspend fun postEmployeeAcceptance(
+        @Body employee: EmployeeStatusModel
     ): Response<Boolean>
 }
 

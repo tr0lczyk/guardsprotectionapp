@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.guardsprotectionapp.databinding.ItemWorkOfferBinding
 import com.example.guardsprotectionapp.models.OfferModel
 
-class OfferAdapter(val clickListener: OfferListener) : ListAdapter<OfferModel, OfferAdapter.ViewHolder>(OfferDiffCallback()){
+class OfferAdapter(val clickListener: OfferListener, val clickListenerAccept: OfferListenerAccept) :
+    ListAdapter<OfferModel, OfferAdapter.ViewHolder>(OfferDiffCallback()){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -16,15 +17,15 @@ class OfferAdapter(val clickListener: OfferListener) : ListAdapter<OfferModel, O
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position), clickListener)
+        holder.bind(getItem(position), clickListener, clickListenerAccept)
     }
-
 
     class ViewHolder private constructor(val binding: ItemWorkOfferBinding): RecyclerView.ViewHolder(binding.root){
 
-        fun bind(item: OfferModel, clickListener: OfferListener) {
+        fun bind(item: OfferModel, clickListener: OfferListener, clickListenerAccept: OfferListenerAccept) {
             binding.viewModel = item
             binding.clickListener = clickListener
+            binding.clickListenerAccept = clickListenerAccept
             binding.executePendingBindings()
         }
 
@@ -39,6 +40,10 @@ class OfferAdapter(val clickListener: OfferListener) : ListAdapter<OfferModel, O
 
     class OfferListener(val clickListener: (offerModel: OfferModel) -> Unit){
         fun onClick(offer: OfferModel) = clickListener(offer)
+    }
+
+    class OfferListenerAccept(val clickListenerAccept: (offerModel: OfferModel) -> Unit){
+        fun onClickAccept(offer: OfferModel) = clickListenerAccept(offer)
     }
 }
 

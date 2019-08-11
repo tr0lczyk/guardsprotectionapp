@@ -1,29 +1,24 @@
 package com.example.guardsprotectionapp.utils
 
+
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.guardsprotectionapp.R
+import com.example.guardsprotectionapp.models.EmployeeModel
 import com.example.guardsprotectionapp.models.OfferModel
+import com.example.guardsprotectionapp.ui.loginfragment.LoginViewModel.Companion.USER
 import com.example.guardsprotectionapp.ui.panelfragment.OfferAdapter
+import com.example.guardsprotectionapp.ui.panelfragment.PanelViewModel
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.textfield.TextInputLayout
-import android.graphics.BitmapFactory
-import android.graphics.Bitmap
-import android.icu.util.MeasureUnit.BYTE
-import android.util.Base64
-import com.bumptech.glide.Glide
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.util.*
-import android.R
-import android.R.attr.fragment
-import com.bumptech.glide.request.RequestOptions
-
-
-
-
 
 
 @BindingAdapter("errorText")
@@ -68,4 +63,23 @@ fun TextView.setDate(date: String?){
 
         this.text = formattedDate
     }
+}
+
+@BindingAdapter("changeStrokeColor")
+fun MaterialCardView.setNewColor(assignedEmployees: List<EmployeeModel>){
+    val sharedPreferences = SharedPreferences(context)
+    val user = sharedPreferences.getValueLogin(USER)
+        val filteredEployees: List<EmployeeModel>? =
+            assignedEmployees?.filter {
+                it.employeeId == user!!.id
+            }
+        if (filteredEployees != null) {
+            for (j in filteredEployees) {
+                this.strokeColor = when(j.employeeStatus.id){
+                    PanelViewModel.EmployeeStatusId.INBOX.status -> ContextCompat.getColor(context, R.color.loginButtonDarker)
+                    PanelViewModel.EmployeeStatusId.DECLINED.status -> ContextCompat.getColor(context, R.color.red)
+                    else -> ContextCompat.getColor(context, R.color.green)
+                }
+            }
+        }
 }
