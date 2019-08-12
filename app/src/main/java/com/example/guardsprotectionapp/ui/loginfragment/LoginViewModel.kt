@@ -47,7 +47,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun areLoginPasswordEmpty(): Boolean {
-        return (userInputLogin.value!!.isEmpty() && userInputPassword.value!!.isEmpty())
+        return (userInputLogin.value?.isEmpty()!! && userInputPassword.value!!.isEmpty())
     }
 
     init {
@@ -69,7 +69,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         if (loginButtonEnabled.value!!) {
             progressVisibility.value = View.VISIBLE
             coroutineScope.launch {
-                try{
+                try {
                     val response = GuardApi.retrofitService.postLogin(
                         LoginModel(
                             userInputLogin.value!!,
@@ -94,6 +94,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                         "Cannot reach the server, please try again",
                         Toast.LENGTH_SHORT
                     ).show()
+                    progressVisibility.value = View.GONE
                 }
             }
         } else {
@@ -106,8 +107,10 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun isLoginButtonEnabled() {
-        if (areLoginPasswordValid() && !areLoginPasswordEmpty()) {
-            loginButtonEnabled.value = true
+        if(userInputLogin.value != null && userInputPassword.value != null){
+            if (areLoginPasswordValid() && !areLoginPasswordEmpty()) {
+                loginButtonEnabled.value = true
+            }
         }
     }
 

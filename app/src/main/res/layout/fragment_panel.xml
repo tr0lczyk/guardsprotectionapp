@@ -111,12 +111,36 @@
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+        <TextView
+            android:visibility="@{viewModel.emptyListVisibility}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="The list is empty"
+            android:textSize="32sp"
+            app:layout_constraintBottom_toBottomOf="@+id/swipeButton"
+            app:layout_constraintEnd_toEndOf="@+id/swipeButton"
+            app:layout_constraintStart_toStartOf="@+id/swipeButton"
+            app:layout_constraintTop_toTopOf="@+id/swipeButton" />
+
+        <com.google.android.material.button.MaterialButton
+            android:onClick="@{() -> viewModel.logoutUser()}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="Log out"
+            app:backgroundTint="@color/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="@+id/swipeButton"
+            app:layout_constraintEnd_toEndOf="@+id/swipeButton" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#26000000"
             android:visibility="@{viewModel.panelProgressVisibility}"
-            tools:visibility="gone" />
+            tools:visibility="gone"/>
 
         <ProgressBar
             android:layout_width="wrap_content"

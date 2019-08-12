@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.example.guardsprotectionapp.databinding.FragmentPanelBinding
 import timber.log.Timber
 
@@ -47,10 +48,18 @@ class PanelFragment : Fragment() {
         })
 
         viewModel.offerList.observe(viewLifecycleOwner, Observer {
-            it?.let{
+            it?.let {
                 adapter.submitList(it)
             }
         })
+
+        viewModel.navigateToLogin.observe(this, Observer {
+            if (it) {
+                findNavController().navigate(PanelFragmentDirections.actionPanelFragmentToLoginFragment())
+                viewModel.navigateToLogin.value = false
+            }
+        })
+
         return binding.root
     }
 }

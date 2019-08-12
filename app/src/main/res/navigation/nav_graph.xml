@@ -16,12 +16,19 @@
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/loginFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         tools:layout="@layout/fragment_panel"
         android:id="@+id/panelFragment"
         android:name="com.example.guardsprotectionapp.ui.panelfragment.PanelFragment"
         android:label="PanelFragment">
+        <action
+            android:id="@+id/action_panelFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@+id/panelFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 </navigation>

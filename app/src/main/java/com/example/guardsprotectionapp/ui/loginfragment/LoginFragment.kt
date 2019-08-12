@@ -35,10 +35,10 @@ class LoginFragment : Fragment() {
         })
 
         viewModel.userInputPassword.observe(this, Observer {
-            if (it.toCharArray().size < 8 && it.isNotEmpty()) {
+            if (it.toCharArray().size < 4 && it.isNotEmpty()) {
                 viewModel.invalidPassword(true)
                 binding.textInputLayoutPassword.error = getString(R.string.pass_char)
-            } else if (it.toCharArray().size >= 8 || it.isEmpty()) {
+            } else if (it.toCharArray().size >= 4 || it.isEmpty()) {
                 viewModel.invalidPassword(false)
                 binding.textInputLayoutPassword.error = null
             }
@@ -49,6 +49,8 @@ class LoginFragment : Fragment() {
             if(it){
                 this.findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToPanelFragment())
                 UIUtil.hideKeyboard(activity)
+                viewModel.userInputLogin.value = ""
+                viewModel.userInputPassword.value = ""
                 viewModel.startNavigation.value = false
             }
         })

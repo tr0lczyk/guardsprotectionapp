@@ -5,7 +5,6 @@ import android.app.NotificationManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
@@ -38,12 +37,14 @@ class MainActivity : AppCompatActivity() {
                 val msg = getString(R.string.msg_token_fmt, token)
                 Log.d(TAG, msg)
             })
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
             channel.description = CHANNEL_DESC
             val manager = getSystemService(NotificationManager::class.java)
             manager.createNotificationChannel(channel)
         }
+
         val sharedPreferences = SharedPreferences(this)
         val navOptions = NavOptions.Builder()
             .setPopUpTo(R.id.loginFragment, true)

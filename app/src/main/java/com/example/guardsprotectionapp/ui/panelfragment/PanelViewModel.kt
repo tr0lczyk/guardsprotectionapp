@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.guardsprotectionapp.R
 import com.example.guardsprotectionapp.models.*
 import com.example.guardsprotectionapp.network.GuardApi
+import com.example.guardsprotectionapp.ui.loginfragment.LoginViewModel
 import com.example.guardsprotectionapp.ui.loginfragment.LoginViewModel.Companion.USER
 import com.example.guardsprotectionapp.utils.SharedPreferences
 import kotlinx.coroutines.*
@@ -46,10 +47,13 @@ class PanelViewModel(application: Application) : AndroidViewModel(application) {
     val panelProgressVisibility = MutableLiveData<Int>()
     var firstTime = true
     val swipeRefreshing = MutableLiveData<Boolean>()
-
+    var emptyListVisibility =  MutableLiveData<Int>()
+    var navigateToLogin = MutableLiveData<Boolean>()
 
     init {
         whichList = 1
+        navigateToLogin.value = false
+        emptyListVisibility.value = View.GONE
         swipeRefreshing.value = false
         panelProgressVisibility.value = View.GONE
         getJobOffers()
@@ -82,6 +86,7 @@ class PanelViewModel(application: Application) : AndroidViewModel(application) {
                                 1 -> getInboxJobOffers()
                                 2 -> getAcceptedJobOffers()
                             }
+                            verifyEmptyList()
                             panelProgressVisibility.value = View.GONE
                         }
                     } else {
@@ -147,7 +152,9 @@ class PanelViewModel(application: Application) : AndroidViewModel(application) {
                 response.let {
                     if (response.isSuccessful) {
                         response.body()?.let {
-                            Toast.makeText(getApplication(),"Your request has been send", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(getApplication(),"Your request has been send",
+                                Toast.LENGTH_SHORT).show()
+                            getJobOffers()
                             panelProgressVisibility.value = View.GONE
                         }
                     } else {
@@ -183,6 +190,7 @@ class PanelViewModel(application: Application) : AndroidViewModel(application) {
                 }
             }
         }
+        verifyEmptyList()
         _offerList.value = currentList
     }
 
@@ -203,13 +211,13 @@ class PanelViewModel(application: Application) : AndroidViewModel(application) {
                 }
             }
         }
+        verifyEmptyList()
         _offerList.value = currentList
     }
 
     fun getAcceptedJobOffers() {
         whichList = 2
         currentList = ArrayList()
-//        currentList.clear()
         highlightSingleButton(R.color.colorPrimary, R.color.colorPrimary, R.color.green)
         for (i in mainOfferList) {
             val filteredEployees: List<EmployeeModel>? =
@@ -224,6 +232,7 @@ class PanelViewModel(application: Application) : AndroidViewModel(application) {
                 }
             }
         }
+        verifyEmptyList()
         _offerList.value = currentList
     }
 
@@ -236,5 +245,18 @@ class PanelViewModel(application: Application) : AndroidViewModel(application) {
         declinedStrokeColor.value = ContextCompat.getColor(getApplication(), colorD)
         inboxStrokeColor.value = ContextCompat.getColor(getApplication(), colorI)
         acceptedStrokeColor.value = ContextCompat.getColor(getApplication(), colorA)
+    }
+
+    fun verifyEmptyList(){
+        if(currentList.isEmpty()){
+            emptyListVisibility.value = View.VISIBLE
+        } else {
+            emptyListVisibility.value = View.GONE
+        }
+    }
+
+    fun logoutUser(){
+        sharedPrefs.removeValue(USER)
+        navigateToLogin.value = true
     }
 }
