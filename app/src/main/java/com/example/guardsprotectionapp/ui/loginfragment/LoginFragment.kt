@@ -49,8 +49,6 @@ class LoginFragment : Fragment() {
             if(it){
                 this.findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToPanelFragment())
                 UIUtil.hideKeyboard(activity)
-                viewModel.userInputLogin.value = ""
-                viewModel.userInputPassword.value = ""
                 viewModel.startNavigation.value = false
             }
         })
