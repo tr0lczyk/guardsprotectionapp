@@ -123,6 +123,7 @@ class PanelViewModel(application: Application) : AndroidViewModel(application) {
                         response.body()?.let {
                             getJobOffers()
                         }
+                        panelProgressVisibility.value = View.GONE
                     } else {
                         Log.i(TAG, response.message())
                         panelProgressVisibility.value = View.GONE

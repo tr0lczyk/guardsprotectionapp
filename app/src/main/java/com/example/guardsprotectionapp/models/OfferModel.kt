@@ -1,7 +1,9 @@
 package com.example.guardsprotectionapp.models
 
+import androidx.room.Entity
 import com.squareup.moshi.Json
 
+@Entity(tableName = "offerTable")
 data class OfferModel (
     val customer: String?,
     val customerId: Int?,
