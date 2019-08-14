@@ -23,8 +23,8 @@ class PanelViewModel(application: Application) : AndroidViewModel(application) {
     enum class EmployeeStatusId(val status: Int) {
         NOTSEND(100),
         INBOX(1),
-        ACCEPTED(2),
-        DECLINED(0)
+        ACCEPTED(0),
+        DECLINED(2)
     }
 
     val TAG = "panelViewModel"
@@ -185,7 +185,8 @@ class PanelViewModel(application: Application) : AndroidViewModel(application) {
                 }
             if (filteredEployees != null) {
                 for (j in filteredEployees) {
-                    if (j.employeeStatus.id == EmployeeStatusId.INBOX.status) {
+                    if (j.employeeStatus.id != EmployeeStatusId.DECLINED.status &&
+                            j.status.id == 0) {
                         currentList.add(i)
                     }
                 }
@@ -227,7 +228,8 @@ class PanelViewModel(application: Application) : AndroidViewModel(application) {
                 }
             if (filteredEployees != null) {
                 for (j in filteredEployees) {
-                    if (j.employeeStatus.id == EmployeeStatusId.ACCEPTED.status) {
+                    if (j.employeeStatus.id == EmployeeStatusId.ACCEPTED.status &&
+                        j.status.id == 1) {
                         currentList.add(i)
                     }
                 }

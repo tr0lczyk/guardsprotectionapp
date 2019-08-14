@@ -16,4 +16,5 @@
     <string name="declined">Declined</string>
     <string name="accepted">Accepted</string>
     <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
+    <string name="send_to_super">Waiting for Approval</string>
 </resources>

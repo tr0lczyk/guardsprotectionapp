@@ -77,13 +77,14 @@ fun MaterialCardView.setNewColor(assignedEmployees: List<EmployeeModel>) {
         }
     if (filteredEmployees != null) {
         for (j in filteredEmployees) {
-            this.strokeColor = when (j.employeeStatus.id) {
-                PanelViewModel.EmployeeStatusId.INBOX.status -> ContextCompat.getColor(
-                    context,
-                    R.color.loginButtonDarker
-                )
-                PanelViewModel.EmployeeStatusId.DECLINED.status -> ContextCompat.getColor(context, R.color.red)
-                else -> ContextCompat.getColor(context, R.color.green)
+            if (j.employeeStatus.id != PanelViewModel.EmployeeStatusId.DECLINED.status &&
+                j.status.id == 0
+            ) {
+                this.strokeColor = ContextCompat.getColor(context, R.color.loginButtonDarker)
+            } else if (j.employeeStatus.id == PanelViewModel.EmployeeStatusId.DECLINED.status) {
+                this.strokeColor = ContextCompat.getColor(context, R.color.red)
+            } else {
+                this.strokeColor = ContextCompat.getColor(context, R.color.green)
             }
         }
     }
@@ -117,9 +118,19 @@ fun TextView.setAcceptedTextVisibility(assignedEmployees: List<EmployeeModel>) {
         }
     if (filteredEmployees != null) {
         for (j in filteredEmployees) {
-            this.visibility = when (j.employeeStatus.id) {
-                PanelViewModel.EmployeeStatusId.ACCEPTED.status -> View.VISIBLE
-                else -> View.GONE
+            if (j.employeeStatus.id == PanelViewModel.EmployeeStatusId.ACCEPTED.status
+                && j.status.id == 1
+            ) {
+                this.visibility = View.VISIBLE
+                this.setTextColor(ContextCompat.getColor(context, R.color.green))
+                this.text = context.getString(R.string.accepted)
+            } else if (j.employeeStatus.id == PanelViewModel.EmployeeStatusId.ACCEPTED.status
+                && j.status.id == 0){
+                this.visibility = View.VISIBLE
+                this.setTextColor(ContextCompat.getColor(context, R.color.loginButtonDarker))
+                this.text = context.getString(R.string.send_to_super)
+            } else {
+                this.visibility = View.GONE
             }
         }
     }
