@@ -19,3 +19,5 @@ data class EmployeeModel(
     val createdDate: String,
     val modifiedDate: String
 )
+
+data class EmployeesList(val list: List<EmployeeModel>)

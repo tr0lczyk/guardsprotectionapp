@@ -134,6 +134,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                         } else {
                             progressVisibility.value = View.GONE
                             Timber.i(response.message())
+                            Log.i("TAG", response.message())
                         }
                     }
                 }
@@ -158,7 +159,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                         startNavigation.value = true
                     } else {
                         progressVisibility.value = View.GONE
-                        Timber.i(response.message())
+                        Log.i("TAG", response.message())
                     }
                 }
             } catch (e: SocketTimeoutException) {

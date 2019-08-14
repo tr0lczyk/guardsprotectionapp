@@ -9,6 +9,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.guardsprotectionapp.R
+import com.example.guardsprotectionapp.database.GuardDatabase
 import com.example.guardsprotectionapp.models.*
 import com.example.guardsprotectionapp.network.GuardApi
 import com.example.guardsprotectionapp.ui.loginfragment.LoginViewModel
@@ -49,6 +50,7 @@ class PanelViewModel(application: Application) : AndroidViewModel(application) {
     val swipeRefreshing = MutableLiveData<Boolean>()
     var emptyListVisibility =  MutableLiveData<Int>()
     var navigateToLogin = MutableLiveData<Boolean>()
+    val database: GuardDatabase
 
     init {
         whichList = 1
@@ -60,6 +62,7 @@ class PanelViewModel(application: Application) : AndroidViewModel(application) {
         mainOfferList = ArrayList()
         currentList = ArrayList()
         user = sharedPrefs.getValueLogin(USER)
+        database = GuardDatabase.invoke(application)
     }
 
     fun getJobOffers() {
@@ -105,6 +108,12 @@ class PanelViewModel(application: Application) : AndroidViewModel(application) {
                 ).show()
                 panelProgressVisibility.value = View.GONE
             }
+        }
+    }
+
+    fun saveOffers(vararg offers: OfferModel){
+        panelViewModelScope.launch {
+            database.OfferModelDao().insertAll(*offers)
         }
     }
 
@@ -207,7 +216,8 @@ class PanelViewModel(application: Application) : AndroidViewModel(application) {
                 }
             if (filteredEployees != null) {
                 for (j in filteredEployees) {
-                    if (j.employeeStatus.id == EmployeeStatusId.DECLINED.status) {
+                    if (j.employeeStatus.id == EmployeeStatusId.DECLINED.status ||
+                        j.status.id == EmployeeStatusId.DECLINED.status ) {
                         currentList.add(i)
                     }
                 }
@@ -262,4 +272,48 @@ class PanelViewModel(application: Application) : AndroidViewModel(application) {
         sharedPrefs.removeValue(USER)
         navigateToLogin.value = true
     }
+
+//    fun getCustomersData() {
+//        panelViewModelScope.launch {
+//            try {
+//                val response = GuardApi.retrofitService.getCustomersData(28)
+//                response.let {
+//                    if(response.isSuccessful){
+//                        Log.i("TAG", "success")
+//                    } else {
+//                        Timber.i(response.message())
+//                        Log.i("TAG", response.message())
+//                    }
+//                }
+//            } catch (e: SocketTimeoutException) {
+//                Toast.makeText(
+//                    getApplication(),
+//                    "Cannot reach the server, please try again",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//            }
+//        }
+//    }
+
+//    fun postNewFirebaseToken(userData: UserModel) {
+//        panelViewModelScope.launch {
+//            try {
+//                val response = GuardApi.retrofitService.postUserData(userData)
+//                response.let {
+//                    if(response.isSuccessful){
+//                        Log.i("TAG", "success")
+//                    } else {
+//                        Timber.i(response.message())
+//                        Log.i("TAG", response.message())
+//                    }
+//                }
+//            } catch (e: SocketTimeoutException) {
+//                Toast.makeText(
+//                    getApplication(),
+//                    "Cannot reach the server, please try again",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//            }
+//        }
+//    }
 }

@@ -37,8 +37,8 @@ class MainActivity : AppCompatActivity() {
                 }
                 val token = task.result?.token
                 val msg = getString(R.string.msg_token_fmt, token)
-                sharedPreferences.save(FIREBASE_TOKEN,msg)
-                Log.d(TAG, msg)
+                sharedPreferences.save(FIREBASE_TOKEN,"$token")
+                Log.d(TAG, "$token")
             })
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

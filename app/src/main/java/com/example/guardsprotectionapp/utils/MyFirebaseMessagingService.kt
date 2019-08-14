@@ -10,11 +10,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         val TAG = "messageService"
 
-        if (remoteMessage!!.notification != null) {
-            val title = remoteMessage.notification!!.title
-            val body = remoteMessage.notification!!.body
-
-            Utilities.NotificationHelper.displayNotification(applicationContext, title!!, body!!)
-        }
+//        if (remoteMessage!!.notification != null) {
+//            val title = remoteMessage.notification!!.title
+//            val body = remoteMessage.notification!!.body
+//
+//            Utilities.NotificationHelper.displayNotification(applicationContext, title!!, body!!)
+//        }
     }
 }

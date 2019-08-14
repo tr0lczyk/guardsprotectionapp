@@ -8,17 +8,11 @@ import com.example.guardsprotectionapp.models.OfferModel
 interface OfferModelDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(vararg offers: OfferModel)
+    suspend fun insertAll(vararg offers: OfferModel)
 
     @Update
-    fun update(offer: OfferModel)
+    suspend fun update(offer: OfferModel)
 
-    @Query("select * from offerTable")
-    fun getAllOffers(): LiveData<List<OfferModel>>
-
-    @Query("select * from offerTable where assignedEmployees =:employeeId + assignedEmployees")
-    fun getInboxOffers(employeeId: Long): LiveData<List<OfferModel>>
-
-
-
+    @Query("delete from offerTable")
+    suspend fun deleteAllOffers()
 }

@@ -1,6 +1,7 @@
 package com.example.guardsprotectionapp.models
 
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 
 @Entity(tableName = "offerTable")
@@ -23,6 +24,7 @@ data class OfferModel (
     val offerBannerFile: OfferBannerFileModel?,
     val groups: String?,
     val assignedEmployees: List<EmployeeModel>?,
+    @PrimaryKey
     val id: Long,
     val createdBy: Long?,
     val modifiedBy: Long?,

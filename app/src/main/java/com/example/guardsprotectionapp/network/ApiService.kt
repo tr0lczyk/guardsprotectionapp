@@ -17,6 +17,7 @@ private const val GET_JOB_OFFERS = "JobOffers"
 private const val POST_UPDATE_ACCEPTANCE = "JobOffers/SetEmployeeAcceptance"
 private const val POST_USER_DATA = "Employees/UpdateFirebaseMobileAppToken"
 private const val GET_USER_DATA = "Employees/{id}"
+private const val GET_CUSTOMER_DATA = "Customers/{customersId}"
 
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
@@ -35,11 +36,16 @@ interface GuardAPiService {
         @Body employee: EmployeeStatusModel
     ): Response<Boolean>
 
+    @GET(GET_CUSTOMER_DATA)
+    suspend fun getCustomersData(@Path("id") id: Long): Response<CustomersRequest>
+
     @GET(GET_USER_DATA)
     suspend fun getUserData(@Path("id") id: Long): Response<UserModel>
 
     @POST(POST_USER_DATA)
-    suspend fun postUserData(@Body userData: UserModel): Response<Boolean>
+    suspend fun postUserData(@Body userData: UserModel): Response<UserResponse>
+
+
 }
 
 object GuardApi {
