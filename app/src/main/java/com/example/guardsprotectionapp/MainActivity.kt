@@ -22,11 +22,13 @@ class MainActivity : AppCompatActivity() {
         const val CHANNEL_ID = "guardians"
         private const val CHANNEL_NAME= "guardiansApp"
         private const val CHANNEL_DESC = "Notification channel"
+        const val FIREBASE_TOKEN = "tokenFirebase"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val sharedPreferences = SharedPreferences(this)
         FirebaseInstanceId.getInstance().instanceId
             .addOnCompleteListener(OnCompleteListener { task ->
                 if (!task.isSuccessful) {
@@ -35,6 +37,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 val token = task.result?.token
                 val msg = getString(R.string.msg_token_fmt, token)
+                sharedPreferences.save(FIREBASE_TOKEN,msg)
                 Log.d(TAG, msg)
             })
 
@@ -45,7 +48,6 @@ class MainActivity : AppCompatActivity() {
             manager.createNotificationChannel(channel)
         }
 
-        val sharedPreferences = SharedPreferences(this)
         val navOptions = NavOptions.Builder()
             .setPopUpTo(R.id.loginFragment, true)
             .build()

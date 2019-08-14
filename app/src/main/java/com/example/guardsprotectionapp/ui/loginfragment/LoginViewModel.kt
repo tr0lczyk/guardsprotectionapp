@@ -7,9 +7,10 @@ import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.guardsprotectionapp.MainActivity.Companion.FIREBASE_TOKEN
 import com.example.guardsprotectionapp.R
 import com.example.guardsprotectionapp.models.LoginModel
-import com.example.guardsprotectionapp.models.LoginResponse
+import com.example.guardsprotectionapp.models.UserModel
 import com.example.guardsprotectionapp.network.GuardApi
 import com.example.guardsprotectionapp.utils.SharedPreferences
 import kotlinx.coroutines.CoroutineScope
@@ -81,12 +82,12 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                         if (response.isSuccessful) {
                             response.body()?.let {
                                 sharedPreferences.save(USER, response.body()!!)
+                                getUserData()
                             }
-                            startNavigation.value = true
                         } else {
                             Timber.i(response.message())
+                            progressVisibility.value = View.GONE
                         }
-                        progressVisibility.value = View.GONE
                     }
                 } catch (e: SocketTimeoutException) {
                     Toast.makeText(
@@ -106,8 +107,73 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    fun getUserData() {
+        coroutineScope.launch {
+            try {
+                sharedPreferences.getValueLogin(USER)?.let {
+                    val id = sharedPreferences.getValueLogin(USER)!!.id
+                    val response =
+                        GuardApi.retrofitService.getUserData(id)
+                    response.let {
+                        if (response.isSuccessful) {
+                            response.body().let {
+                                val currentFirebaseToken = response.body()?.firebaseMobileAppToken
+                                sharedPreferences.getValueString(FIREBASE_TOKEN).let {
+                                    if (!currentFirebaseToken.equals(sharedPreferences.getValueString(FIREBASE_TOKEN))) {
+                                        val currentUser = response.body()
+                                        currentUser?.firebaseMobileAppToken = sharedPreferences.getValueString(FIREBASE_TOKEN)
+                                        currentUser?.let{
+                                            postNewFirebaseToken(currentUser)
+                                        }
+                                    } else {
+                                        progressVisibility.value = View.GONE
+                                        startNavigation.value = true
+                                    }
+                                }
+                            }
+                        } else {
+                            progressVisibility.value = View.GONE
+                            Timber.i(response.message())
+                        }
+                    }
+                }
+            } catch (e: SocketTimeoutException) {
+                Toast.makeText(
+                    getApplication(),
+                    "Cannot reach the server, please try again",
+                    Toast.LENGTH_SHORT
+                ).show()
+                progressVisibility.value = View.GONE
+            }
+        }
+    }
+
+    fun postNewFirebaseToken(userData: UserModel) {
+        coroutineScope.launch {
+            try {
+                val response = GuardApi.retrofitService.postUserData(userData)
+                response.let {
+                    if(response.isSuccessful){
+                        Log.i("TAG", "success")
+                        startNavigation.value = true
+                    } else {
+                        progressVisibility.value = View.GONE
+                        Timber.i(response.message())
+                    }
+                }
+            } catch (e: SocketTimeoutException) {
+                Toast.makeText(
+                    getApplication(),
+                    "Cannot reach the server, please try again",
+                    Toast.LENGTH_SHORT
+                ).show()
+                progressVisibility.value = View.GONE
+            }
+        }
+    }
+
     fun isLoginButtonEnabled() {
-        if(userInputLogin.value != null && userInputPassword.value != null){
+        if (userInputLogin.value != null && userInputPassword.value != null) {
             if (areLoginPasswordValid() && !areLoginPasswordEmpty()) {
                 loginButtonEnabled.value = true
             }
