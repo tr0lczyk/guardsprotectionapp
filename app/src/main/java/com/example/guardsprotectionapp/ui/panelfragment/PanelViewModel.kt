@@ -10,12 +10,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.guardsprotectionapp.R
 import com.example.guardsprotectionapp.database.GuardDatabase
-import com.example.guardsprotectionapp.models.*
+import com.example.guardsprotectionapp.models.EmployeeModel
+import com.example.guardsprotectionapp.models.EmployeeStatusModel
+import com.example.guardsprotectionapp.models.LoginResponse
+import com.example.guardsprotectionapp.models.OfferModel
 import com.example.guardsprotectionapp.network.GuardApi
-import com.example.guardsprotectionapp.ui.loginfragment.LoginViewModel
 import com.example.guardsprotectionapp.ui.loginfragment.LoginViewModel.Companion.USER
 import com.example.guardsprotectionapp.utils.SharedPreferences
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.net.SocketTimeoutException
 
@@ -51,6 +56,7 @@ class PanelViewModel(application: Application) : AndroidViewModel(application) {
     var emptyListVisibility =  MutableLiveData<Int>()
     var navigateToLogin = MutableLiveData<Boolean>()
     val database: GuardDatabase
+    val cannotConnect = MutableLiveData<Boolean>()
 
     init {
         whichList = 1
@@ -97,6 +103,7 @@ class PanelViewModel(application: Application) : AndroidViewModel(application) {
                         swipeRefreshing.value = true
                         _offerList.value = ArrayList()
                         panelProgressVisibility.value = View.GONE
+                        cannotConnect.value = true
                     }
                 }
             } catch (e: SocketTimeoutException) {
@@ -107,6 +114,7 @@ class PanelViewModel(application: Application) : AndroidViewModel(application) {
                     Toast.LENGTH_SHORT
                 ).show()
                 panelProgressVisibility.value = View.GONE
+                cannotConnect.value = true
             }
         }
     }
@@ -132,7 +140,6 @@ class PanelViewModel(application: Application) : AndroidViewModel(application) {
                         response.body()?.let {
                             getJobOffers()
                         }
-                        panelProgressVisibility.value = View.GONE
                     } else {
                         Log.i(TAG, response.message())
                         panelProgressVisibility.value = View.GONE
@@ -165,7 +172,6 @@ class PanelViewModel(application: Application) : AndroidViewModel(application) {
                             Toast.makeText(getApplication(),"Your request has been send",
                                 Toast.LENGTH_SHORT).show()
                             getJobOffers()
-                            panelProgressVisibility.value = View.GONE
                         }
                     } else {
                         Log.i(TAG, response.message())
@@ -272,48 +278,4 @@ class PanelViewModel(application: Application) : AndroidViewModel(application) {
         sharedPrefs.removeValue(USER)
         navigateToLogin.value = true
     }
-
-//    fun getCustomersData() {
-//        panelViewModelScope.launch {
-//            try {
-//                val response = GuardApi.retrofitService.getCustomersData(28)
-//                response.let {
-//                    if(response.isSuccessful){
-//                        Log.i("TAG", "success")
-//                    } else {
-//                        Timber.i(response.message())
-//                        Log.i("TAG", response.message())
-//                    }
-//                }
-//            } catch (e: SocketTimeoutException) {
-//                Toast.makeText(
-//                    getApplication(),
-//                    "Cannot reach the server, please try again",
-//                    Toast.LENGTH_SHORT
-//                ).show()
-//            }
-//        }
-//    }
-
-//    fun postNewFirebaseToken(userData: UserModel) {
-//        panelViewModelScope.launch {
-//            try {
-//                val response = GuardApi.retrofitService.postUserData(userData)
-//                response.let {
-//                    if(response.isSuccessful){
-//                        Log.i("TAG", "success")
-//                    } else {
-//                        Timber.i(response.message())
-//                        Log.i("TAG", response.message())
-//                    }
-//                }
-//            } catch (e: SocketTimeoutException) {
-//                Toast.makeText(
-//                    getApplication(),
-//                    "Cannot reach the server, please try again",
-//                    Toast.LENGTH_SHORT
-//                ).show()
-//            }
-//        }
-//    }
 }

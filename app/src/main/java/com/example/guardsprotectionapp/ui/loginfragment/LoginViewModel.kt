@@ -42,6 +42,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     val userInputPassword = MutableLiveData<String>()
     val progressVisibility = MutableLiveData<Int>()
     val startNavigation = MutableLiveData<Boolean>()
+    val cannotConnect = MutableLiveData<Boolean>()
 
     private fun areLoginPasswordValid(): Boolean {
         return (!enableErrorLogin.value!! && !enableErrorPassword.value!!)
@@ -87,6 +88,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                         } else {
                             Timber.i(response.message())
                             progressVisibility.value = View.GONE
+                            cannotConnect.value = true
                         }
                     }
                 } catch (e: SocketTimeoutException) {
@@ -96,6 +98,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                         Toast.LENGTH_SHORT
                     ).show()
                     progressVisibility.value = View.GONE
+                    cannotConnect.value = true
                 }
             }
         } else {

@@ -1,5 +1,6 @@
 package com.example.guardsprotectionapp.ui.panelfragment
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -60,6 +61,25 @@ class PanelFragment : Fragment() {
             }
         })
 
+        viewModel.cannotConnect.observe(this, Observer {
+            if(it){
+                openDialogCantConnect()
+                viewModel.cannotConnect.value = false
+            }
+        })
+
         return binding.root
+    }
+
+    fun openDialogCantConnect(){
+        val builder = AlertDialog.Builder(activity)
+            .setTitle("Unable to connect")
+            .setMessage("Please verify if your device is connected to the internet and try again")
+            .setPositiveButton("OK"){dialog, which ->
+                dialog.dismiss()
+            }
+            .setCancelable(true)
+            .create()
+        builder.show()
     }
 }

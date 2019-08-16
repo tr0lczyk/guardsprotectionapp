@@ -1,42 +1,64 @@
 {
   "project_info": {
-    "project_number": "346996933596",
-    "firebase_url": "https://gss-workers.firebaseio.com",
-    "project_id": "gss-workers",
-    "storage_bucket": "gss-workers.appspot.com"
+    "project_number": "358538817966",
+    "firebase_url": "https://cissgss-da45a.firebaseio.com",
+    "project_id": "cissgss-da45a",
+    "storage_bucket": "cissgss-da45a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:346996933596:android:a46a5827b119f018",
+        "mobilesdk_app_id": "1:358538817966:android:a46a5827b119f018",
         "android_client_info": {
           "package_name": "com.example.guardsprotectionapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "346996933596-tst6iqigmh2lnbfc95k5up9f77d0k764.apps.googleusercontent.com",
+          "client_id": "358538817966-05v0vahiqvj3holsr055gdtnr97ir14p.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAoxWx7SpX2mkuFeG31cgWZ2kChIKbQwJ0"
+          "current_key": "AIzaSyATMXF3zo8WmdcxUgYMCpkWjSWdcE21P0M"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "346996933596-tst6iqigmh2lnbfc95k5up9f77d0k764.apps.googleusercontent.com",
+              "client_id": "358538817966-05v0vahiqvj3holsr055gdtnr97ir14p.apps.googleusercontent.com",
               "client_type": 3
-            },
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:358538817966:android:2bf435201d74efb2",
+        "android_client_info": {
+          "package_name": "pl.ciss.gssmobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "358538817966-05v0vahiqvj3holsr055gdtnr97ir14p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATMXF3zo8WmdcxUgYMCpkWjSWdcE21P0M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
             {
-              "client_id": "346996933596-743okjk75aqj8f41n1u7o6ptql14tbi4.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.rad4m.gssworkers"
-              }
+              "client_id": "358538817966-05v0vahiqvj3holsr055gdtnr97ir14p.apps.googleusercontent.com",
+              "client_type": 3
             }
           ]
         }

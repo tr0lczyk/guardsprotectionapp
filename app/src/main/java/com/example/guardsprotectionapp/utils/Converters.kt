@@ -1,6 +1,5 @@
 package com.example.guardsprotectionapp.utils
 
-import android.renderscript.Type
 import androidx.room.TypeConverter
 import com.example.guardsprotectionapp.models.*
 import com.squareup.moshi.JsonAdapter
@@ -48,15 +47,13 @@ class Converters {
     fun employeeListToString(employeeModel: List<EmployeeModel>?): String? {
         val type = Types.newParameterizedType(List::class.java, EmployeeModel::class.java)
         val adapter: JsonAdapter<List<EmployeeModel>> = moshi.adapter(type)
-        val persons = adapter.toJson(employeeModel)
-        return persons
+        return adapter.toJson(employeeModel)
     }
 
     @TypeConverter
     fun stringToEmployeeList(value: String): List<EmployeeModel>? {
         val type = Types.newParameterizedType(List::class.java, EmployeeModel::class.java)
         val adapter: JsonAdapter<List<EmployeeModel>> = moshi.adapter(type)
-        val persons = adapter.fromJson(value)
-        return persons
+        return adapter.fromJson(value)
     }
 }
